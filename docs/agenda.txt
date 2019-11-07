@@ -1,0 +1,15 @@
+New App: Stud
+I want to make a simple web chat system for Aptech Students.
+
+To reduce noise making excessively, Also to aid in sending of files and installation kit for students and faculties.
+
+
+Key features
+
+Chats system
+
+Group & Private Groups ( Based on classes )
+
+Files transfers
+
+Groups: Developers And Gamers

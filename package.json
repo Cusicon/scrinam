@@ -1,0 +1,30 @@
+{
+  "name": "stud",
+  "version": "1.0.0",
+  "description": "A chat system",
+  "main": "./server/server.js",
+  "directories": {
+    "doc": "docs"
+  },
+  "dependencies": {
+    "express": "^4.17.1",
+    "hbs": "^4.0.6",
+    "moment": "^2.24.0",
+    "socket.io": "^2.3.0"
+  },
+  "devDependencies": {
+    "expect": "^24.9.0",
+    "mocha": "^6.2.2"
+  },
+  "scripts": {
+    "start": "node ./server/server.js",
+    "dev": "node ./server/server.js"
+  },
+  "keywords": [
+    "chat",
+    "system",
+    "messaging"
+  ],
+  "author": "Success Chukwu <chuxsuccess0@gmail.com>",
+  "license": "ISC"
+}
