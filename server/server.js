@@ -23,14 +23,14 @@ io.on("connection", socket => {
     console.log("createMessage", message);
   });
 
-  // Greet the new user.
+  // Greet new user.
   socket.emit("newMessage", {
     from: "Admin",
     text: "Welcome to Tarotapp",
     createdAt: new Date().getTime()
   });
 
-  // Alert other user of a new user joining.
+  // Alert others of a new user joining.
   socket.broadcast.emit("newMessage", {
     from: "Admin",
     text: "New user joined.",
