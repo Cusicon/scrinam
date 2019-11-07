@@ -1,7 +1,7 @@
-Stud
-I want to make a simple web chat system for Aptech Students.
+Tarot
+I want to make a simple web chat system for Aptech Tarotents.
 
-To reduce noise making excessively, Also to aid in sending of files and installation kit for students and faculties.
+To reduce noise making excessively, Also to aid in sending of files and installation kit for tarotents and faculties.
 
 
 Key features

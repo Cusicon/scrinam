@@ -1,3 +1,3 @@
-# Stud
+# Tarot
 
 A chat system
