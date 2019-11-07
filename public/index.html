@@ -7,6 +7,16 @@
     <title>Tarot</title>
   </head>
   <body>
-    <p>Welcome to Tarot 1.0</p>
+    <p>Welcome to Tarotapp</p>
+    <script src="/socket.io/socket.io.js"></script>
+    <script>
+      var socket = io();
+      socket.on("connect", () => {
+        console.log("Connected to server");
+      });
+      socket.on("disconnect", () => {
+        console.log("Disconnected from server");
+      });
+    </script>
   </body>
 </html>
