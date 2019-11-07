@@ -14,7 +14,8 @@
   },
   "devDependencies": {
     "expect": "^24.9.0",
-    "mocha": "^6.2.2"
+    "mocha": "^6.2.2",
+    "nodemon": "1.19.1"
   },
   "engines": {
     "node": "10.16.0",
@@ -22,7 +23,9 @@
   },
   "scripts": {
     "start": "node ./server/server.js",
-    "dev": "nodemon ./server/server.js"
+    "dev": "nodemon ./server/server.js",
+    "test": "mocha server/**/*.test.js",
+    "test-watch": "nodemon --exec 'npm test'"
   },
   "keywords": [
     "chat",
