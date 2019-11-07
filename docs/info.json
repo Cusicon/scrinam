@@ -1,0 +1,10 @@
+{
+  "app": {
+    "boody": {
+      "type": "gradient",
+      "style": {
+        "background": "linear-gradient(135deg, #8363a1 0%, #74a8c3 100%)"
+      }
+    }
+  }
+}
