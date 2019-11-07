@@ -5,7 +5,6 @@ const publicPath = path.join(__dirname, "../public");
 const port = process.env.PORT || 3030;
 
 let app = express();
-let server = http.createServer(app);
 
 app.use(express.static(publicPath));
 
@@ -14,5 +13,5 @@ app.get("/", (req, res) => {
 });
 
 app.listen(port, err =>
-  err ? console.log(err) : console.log(`Server started @port: ${port}`)
+  err ? console.log(err) : console.log(`Server started @ port: ${port}`)
 );

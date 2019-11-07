@@ -16,9 +16,12 @@
     "expect": "^24.9.0",
     "mocha": "^6.2.2"
   },
+  "engines": {
+    "node": "10.16.0"
+  },
   "scripts": {
     "start": "node ./server/server.js",
-    "dev": "node ./server/server.js"
+    "dev": "nodemon ./server/server.js"
   },
   "keywords": [
     "chat",

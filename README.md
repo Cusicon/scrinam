@@ -1,4 +1,3 @@
 # Stud
 
-## a chat system
-# Stud
+A chat system
