@@ -23,6 +23,20 @@ io.on("connection", socket => {
     console.log("createMessage", message);
   });
 
+  // Greet the new user.
+  socket.emit("newMessage", {
+    from: "Admin",
+    text: "Welcome to Tarotapp",
+    createdAt: new Date().getTime()
+  });
+
+  // Alert other user of a new user joining.
+  socket.broadcast.emit("newMessage", {
+    from: "Admin",
+    text: "New user joined.",
+    createdAt: new Date().getTime()
+  });
+
   socket.on("disconnect", () => {
     console.log("User was disconnected");
   });

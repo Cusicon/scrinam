@@ -1,4 +1,5 @@
 Socket.io
 
-socket.emit() :: This emits values to a single connection on the network.
-io.emit()     :: This emits values to every connection on the network.
+socket.emit()              :: This emits values to a single connection on the network.
+io.emit()                  :: This emits values to every connection on the network.
+socket.broadcast.emit()    :: This is emits to all user on that network except the socket (user) making the broadcast.
