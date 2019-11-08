@@ -25,3 +25,35 @@ $("#message-form").on("submit", e => {
     }
   );
 });
+
+socket.on("newLocationMessage", (locationMessage, callback) => {
+  let li = $("<li></li>");
+  let link = $(`<a target="_blank">My current location</a>`);
+
+  link.attr("href", locationMessage.url);
+  li.text(`${locationMessage.from}: `);
+  li.append(link);
+  $("#messages").append(li);
+});
+
+let locationButton = $("#send-location");
+
+locationButton.on("click", e => {
+  if (!navigator.geolocation) {
+    return alert("Geolocation not supported by your browser!");
+  }
+
+  navigator.geolocation.getCurrentPosition(
+    position => {
+      const { latitude, longitude } = position.coords;
+      socket.emit("createLocationMessage", { latitude, longitude });
+    },
+    () => {
+      // socket.emit("createLocationMessage", {
+      //   latitude: "1212",
+      //   longitude: "-234545"
+      // });
+      alert("Unable to fetch location!.");
+    }
+  );
+});
