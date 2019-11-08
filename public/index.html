@@ -8,7 +8,21 @@
   </head>
   <body>
     <p>Welcome to Tarot</p>
+
+    <ol id="messages"></ol>
+
+    <form action="" method="get" id="message-form">
+      <input
+        type="text"
+        name="message"
+        id="message"
+        placeholder="Type message..."
+      />
+      <button>Send</button>
+    </form>
+
     <script src="/socket.io/socket.io.js"></script>
+    <script src="/js/libs/jquery-3.1.1.min.js"></script>
     <script src="/js/index.js"></script>
   </body>
 </html>

@@ -26,8 +26,9 @@ io.on("connection", socket => {
   );
 
   // Receiving and sending messages to users
-  socket.on("createMessage", message => {
+  socket.on("createMessage", (message, callback) => {
     io.emit("newMessage", generateMessage(message.from, message.text));
+    callback("This is from the server.");
     console.log("createMessage", message);
   });
 
