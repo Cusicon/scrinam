@@ -53,13 +53,9 @@ let messageTextBox = $("[name=message]");
 // Message form
 $("#message-form").on("submit", e => {
   e.preventDefault();
-  socket.emit(
-    "createMessage",
-    { from: "User", text: messageTextBox.val() },
-    () => {
-      messageTextBox.val("");
-    }
-  );
+  socket.emit("createMessage", { text: messageTextBox.val() }, () => {
+    messageTextBox.val("");
+  });
 });
 
 // New message
