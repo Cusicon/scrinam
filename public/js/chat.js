@@ -22,10 +22,30 @@ let scrollToBottom = () => {
 
 socket.on("connect", () => {
   console.log("Connected to server");
+
+  let params = $.deparam(window.location.search);
+
+  socket.emit("join", params, err => {
+    if (err) {
+      window.location.href = "/";
+    } else {
+      console.log("No errors.");
+    }
+  });
 });
 
 socket.on("disconnect", () => {
   console.log("Disconnected from server");
+});
+
+socket.on("updateUserList", users => {
+  let ol = $("<ol></ol>");
+
+  users.forEach(user => {
+    ol.append($("<li></li>").text(user));
+  });
+
+  $("#users").html(ol);
 });
 
 let messageTextBox = $("[name=message]");

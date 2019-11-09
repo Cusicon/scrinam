@@ -1,5 +1,5 @@
 {
-  "name": "tarot",
+  "name": "parrot",
   "version": "1.0.0",
   "description": "A chat system",
   "main": "./server/server.js",

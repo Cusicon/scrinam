@@ -48,8 +48,8 @@ button:disabled {
   justify-content: center;
   background: -moz-linear-gradient(
     125deg,
-    #8363a1 0%,
-    #74a8c3 100%
+    #74a8c3 0%,
+    #8363a1 100%
   ); /* ff3.6+ */
   background: -webkit-gradient(
     linear,
@@ -60,16 +60,16 @@ button:disabled {
   ); /* safari4+,chrome */
   background: -webkit-linear-gradient(
     125deg,
-    #8363a1 0%,
-    #74a8c3 100%
+    #74a8c3 0%,
+    #8363a1 100%
   ); /* safari5.1+,chrome10+ */
   background: -o-linear-gradient(
     125deg,
-    #8363a1 0%,
-    #74a8c3 100%
+    #74a8c3 0%,
+    #8363a1 100%
   ); /* opera 11.10+ */
-  background: -ms-linear-gradient(125deg, #8363a1 0%, #74a8c3 100%); /* ie10+ */
-  background: linear-gradient(325deg, #8363a1 0%, #74a8c3 100%); /* w3c */
+  background: -ms-linear-gradient(125deg, #74a8c3 0%, #8363a1 100%); /* ie10+ */
+  background: linear-gradient(325deg, #74a8c3 0%, #8363a1 100%); /* w3c */
 }
 
 .centered-form__form {
@@ -110,8 +110,8 @@ button:disabled {
   height: 100vh;
   background: -moz-linear-gradient(
     125deg,
-    #8363a1 0%,
-    #74a8c3 100%
+    #74a8c3 0%,
+    #8363a1 100%
   ); /* ff3.6+ */
   background: -webkit-gradient(
     linear,
@@ -122,16 +122,16 @@ button:disabled {
   ); /* safari4+,chrome */
   background: -webkit-linear-gradient(
     125deg,
-    #8363a1 0%,
-    #74a8c3 100%
+    #74a8c3 0%,
+    #8363a1 100%
   ); /* safari5.1+,chrome10+ */
   background: -o-linear-gradient(
     125deg,
-    #8363a1 0%,
-    #74a8c3 100%
+    #74a8c3 0%,
+    #8363a1 100%
   ); /* opera 11.10+ */
-  background: -ms-linear-gradient(125deg, #8363a1 0%, #74a8c3 100%); /* ie10+ */
-  background: linear-gradient(325deg, #8363a1 0%, #74a8c3 100%); /* w3c */
+  background: -ms-linear-gradient(125deg, #74a8c3 0%, #8363a1 100%); /* ie10+ */
+  background: linear-gradient(325deg, #74a8c3 0%, #8363a1 100%); /* w3c */
 }
 
 .chat__sidebar h3 {

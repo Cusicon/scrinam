@@ -1,7 +1,7 @@
-Tarot
-I want to make a simple web chat system for Aptech Tarotents.
+Parrot
+I want to make a simple web chat system for Aptech Parrotents.
 
-To reduce noise making excessively, Also to aid in sending of files and installation kit for tarotents and faculties.
+To reduce noise making excessively, Also to aid in sending of files and installation kit for parrotents and faculties.
 
 
 Key features

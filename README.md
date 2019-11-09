@@ -1,3 +1,3 @@
-# Tarot
+# Parrot
 
 A chat system
