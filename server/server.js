@@ -21,8 +21,9 @@ io.on("connection", socket => {
 
   // Join room
   socket.on("join", (params, callback) => {
+    params.room = params.room.toLowerCase();
     if (!isRealString(params.name) || !isRealString(params.room)) {
-      return callback("Name and room are required.");
+      return callback("Username and Room are required.");
     }
 
     socket.join(params.room);
@@ -38,7 +39,7 @@ io.on("connection", socket => {
       .to(params.room)
       .emit(
         "newMessage",
-        generateMessage("Admin", `${params.name} just entered the room.`)
+        generateMessage(`Admin :: ${params.name}`, `just entered the room.`)
       );
 
     callback();
@@ -75,7 +76,7 @@ io.on("connection", socket => {
       io.to(user.room).emit("updateUserList", users.getUserList(user.room));
       io.to(user.room).emit(
         "newMessage",
-        generateMessage("Admin", `${user.name} just left the room.`)
+        generateMessage(`Admin :: ${user.name}`, `just left the room.`)
       );
     }
 

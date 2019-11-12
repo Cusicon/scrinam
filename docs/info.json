@@ -4,6 +4,19 @@
       "type": "gradient",
       "style": {
         "background": "linear-gradient(135deg, #8363a1 0%, #74a8c3 100%)"
+      },
+      "birdColors": {
+        "bird": {
+          "head": "#fa6301 (orange)",
+          "oultine_fur": "#2f1244 (thick_purple)",
+          "beack": "#fcd201 (yellow)",
+          "neck": "#28b2da (cyan)",
+          "chest": "#f812a7 (magenta)",
+          "upper_feather": "#f90f00 (red)",
+          "lower_feather": "#fcab21 (dark_yellow)",
+          "tail": "#1489e7 (blue)"
+        },
+        "text": "#301241 (Text Color[Violet])"
       }
     }
   }

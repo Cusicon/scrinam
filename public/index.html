@@ -4,25 +4,72 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <meta http-equiv="X-UA-Compatible" content="ie=edge" />
-    <title>Join :: Parrot</title>
+    <link rel="shortcut icon" href="/img/parrot-logo.png" type="image/x-icon" />
     <link rel="stylesheet" href="/css/styles.css" />
+    <title>Parrot :: Join a Room</title>
   </head>
   <body class="centered-form">
     <div class="centered-form__form">
-      <form action="/chat.html" method="get">
+      <form action="/chat.html" method="GET">
         <div class="form-field">
-          <h3>Join a Chat</h3>
+          <h3 style="font-size: 1rem;">
+            <img
+              src="/img/parrot-logo.jpg"
+              alt="Logo"
+              width="125"
+              style="margin-bottom: 5px;"
+            />
+            <h3 style="font-size: 1rem;">
+              Join a Room
+            </h3>
+          </h3>
         </div>
         <div class="form-field">
           <label for="name">Display name</label>
-          <input type="text" name="name" id="name" required autofocus />
+          <input
+            type="text"
+            name="name"
+            id="name"
+            maxlength="20"
+            required
+            autofocus
+          />
         </div>
         <div class="form-field">
-          <label for="room">Room name</label>
+          <label for="room">Room</label>
           <input type="text" name="room" id="room" required />
+
+          <!-- <select name="room" id="room" required>
+            <option value=""> -- Select a Room -- </option>
+            <option value="Developers">Developers</option>
+            <option value="Gamers">Gamers</option>
+          </select> -->
         </div>
-        <div class="form-field"><button id="joinBtn">Join</button></div>
+        <div class="form-field">
+          <button id="joinBtn">Join</button>
+        </div>
+        <div class="creator" style="text-align: center;">
+          <p>Created By</p>
+          <a
+            href="https://github.com/Cusicon"
+            target="_blank"
+            style="text-decoration: none;"
+          >
+            <p>Success Chukwu @ 2019</p>
+          </a>
+        </div>
       </form>
+    </div>
+    <div class="creator hide">
+      <p>Made By</p>
+      <p>Success Chukwu @ 2019</p>
+      <a
+        href="https://github.com/Cusicon"
+        target="_blank"
+        style="text-decoration: none;"
+      >
+        See more...
+      </a>
     </div>
   </body>
 </html>

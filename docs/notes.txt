@@ -3,3 +3,29 @@ Socket.io
 socket.emit()              :: This emits values to a single connection on the network.
 io.emit()                  :: This emits values to every connection on the network.
 socket.broadcast.emit()    :: This is emits to all user on that network except the socket (user) making the broadcast.
+
+
+TODO: REMEMBER
+
+Every (others) user will have a random color for their chat.
+Defaultly set send button to "send file button", until the user start typing a message.
+
+
+TODO: CODE
+let randomColor = () => {
+  let colors = [
+    {
+      orange: "#fa6301",
+      thick_purple: "#2f1244",
+      yellow: "#fcd201",
+      cyan: "#28b2da",
+      magenta: "#f812a7",
+      red: "#f90f00",
+      dark_yellow: "#fcab21",
+      blue: "#1489e7"
+    }
+  ];
+
+  let result = Math.random() * 0.5 * colors.length;
+  return colors[result];
+};

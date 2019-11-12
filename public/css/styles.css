@@ -6,6 +6,21 @@
     Helvetica, Arial, "Lucida Grande", sans-serif;
   font-weight: 300;
   font-size: 0.95rem;
+  outline: none !important;
+  transition: 0.05s linear !important;
+  background-size: cover;
+  background-repeat: no-repeat;
+  background-position: center;
+}
+
+*::-webkit-scrollbar {
+  background-color: transparent !important;
+  width: 5px !important;
+}
+
+*::-webkit-scrollbar-thumb {
+  background-color: #eeeeee !important;
+  border-radius: 50px !important;
 }
 
 ul,
@@ -35,9 +50,40 @@ button:hover {
   padding: 10px;
 }
 
-button:disabled {
-  cursor: default;
-  background: #8a72a1;
+button:active {
+  transition: 0.1s linear !important;
+  transform: scale(1.07, 1.07);
+}
+
+.hide {
+  display: none;
+}
+
+.show {
+  display: block;
+}
+
+.green-bg {
+  background-color: #27b652 !important;
+  color: #ffffff !important;
+}
+
+.green-bg:hover {
+  background-color: #1e9141 !important;
+  color: #ffffff !important;
+}
+
+.green {
+  color: #27b652 !important;
+}
+
+.orange-bg {
+  background-color: #fa6301 !important;
+  color: #ffffff !important;
+}
+
+.orange {
+  color: #fa6301 !important;
 }
 
 .centered-form {
@@ -48,37 +94,46 @@ button:disabled {
   justify-content: center;
   background: -moz-linear-gradient(
     125deg,
-    #74a8c3 0%,
-    #8363a1 100%
+    rgba(39, 107, 130, 1) 0%,
+    rgba(49, 84, 129, 1) 100%
   ); /* ff3.6+ */
   background: -webkit-gradient(
     linear,
     left top,
     right bottom,
-    color-stop(0%, #74a8c3),
-    color-stop(100%, #8363a1)
+    color-stop(0%, rgba(49, 84, 129, 1)),
+    color-stop(100%, rgba(39, 107, 130, 1))
   ); /* safari4+,chrome */
   background: -webkit-linear-gradient(
     125deg,
-    #74a8c3 0%,
-    #8363a1 100%
+    rgba(39, 107, 130, 1) 0%,
+    rgba(49, 84, 129, 1) 100%
   ); /* safari5.1+,chrome10+ */
   background: -o-linear-gradient(
     125deg,
-    #74a8c3 0%,
-    #8363a1 100%
+    rgba(39, 107, 130, 1) 0%,
+    rgba(49, 84, 129, 1) 100%
   ); /* opera 11.10+ */
-  background: -ms-linear-gradient(125deg, #74a8c3 0%, #8363a1 100%); /* ie10+ */
-  background: linear-gradient(325deg, #74a8c3 0%, #8363a1 100%); /* w3c */
+  background: -ms-linear-gradient(
+    125deg,
+    rgba(39, 107, 130, 1) 0%,
+    rgba(49, 84, 129, 1) 100%
+  ); /* ie10+ */
+  background: linear-gradient(
+    325deg,
+    rgba(39, 107, 130, 1) 0%,
+    rgba(49, 84, 129, 1) 100%
+  ); /* w3c */
 }
 
 .centered-form__form {
   background: rgba(250, 250, 250, 0.9);
+  background: #ffffff;
   border: 1px solid #e1e1e1;
   border-radius: 5px;
-  padding: 0px 20px;
+  padding: 20px 35px;
   margin: 20px;
-  width: 230px;
+  width: 300px;
 }
 
 .form-field {
@@ -87,6 +142,7 @@ button:disabled {
 
 .form-field > * {
   width: 100%;
+  border-radius: 5px !important;
 }
 
 .form-field label {
@@ -97,7 +153,11 @@ button:disabled {
 .form-field input,
 .form-field select {
   border: 1px solid #e1e1e1;
-  padding: 10px;
+  padding: 10px !important;
+}
+
+.form-field select {
+  height: 40px;
 }
 
 .chat {
@@ -110,28 +170,36 @@ button:disabled {
   height: 100vh;
   background: -moz-linear-gradient(
     125deg,
-    #74a8c3 0%,
-    #8363a1 100%
+    rgba(39, 107, 130, 1) 0%,
+    rgba(49, 84, 129, 1) 100%
   ); /* ff3.6+ */
   background: -webkit-gradient(
     linear,
     left top,
     right bottom,
-    color-stop(0%, #74a8c3),
-    color-stop(100%, #8363a1)
+    color-stop(0%, rgba(49, 84, 129, 1)),
+    color-stop(100%, rgba(39, 107, 130, 1))
   ); /* safari4+,chrome */
   background: -webkit-linear-gradient(
     125deg,
-    #74a8c3 0%,
-    #8363a1 100%
+    rgba(39, 107, 130, 1) 0%,
+    rgba(49, 84, 129, 1) 100%
   ); /* safari5.1+,chrome10+ */
   background: -o-linear-gradient(
     125deg,
-    #74a8c3 0%,
-    #8363a1 100%
+    rgba(39, 107, 130, 1) 0%,
+    rgba(49, 84, 129, 1) 100%
   ); /* opera 11.10+ */
-  background: -ms-linear-gradient(125deg, #74a8c3 0%, #8363a1 100%); /* ie10+ */
-  background: linear-gradient(325deg, #74a8c3 0%, #8363a1 100%); /* w3c */
+  background: -ms-linear-gradient(
+    125deg,
+    rgba(39, 107, 130, 1) 0%,
+    rgba(49, 84, 129, 1) 100%
+  ); /* ie10+ */
+  background: linear-gradient(
+    325deg,
+    rgba(39, 107, 130, 1) 0%,
+    rgba(49, 84, 129, 1) 100%
+  ); /* w3c */
 }
 
 .chat__sidebar h3 {
@@ -146,7 +214,7 @@ button:disabled {
 
 .chat__sidebar li {
   background: #e6eaee;
-  border: 1px solid #e1e1e1;
+  /* border: 1px solid #e1e1e1; */
   border-radius: 5px;
   padding: 10px;
   margin: 10px;
@@ -157,6 +225,8 @@ button:disabled {
   flex-direction: column;
   height: 100vh;
   width: 100%;
+  background-image: url("/img/parrot-logo3.jpg");
+  background-size: 15%;
 }
 
 .chat__messages {
@@ -166,10 +236,9 @@ button:disabled {
 }
 
 .chat__footer {
-  background: #e6eaee;
   display: flex;
   padding: 10px;
-  /*height: 60px;*/
+  height: 60px !;
   flex-shrink: 0;
 }
 
@@ -178,9 +247,13 @@ button:disabled {
   display: flex;
 }
 
-.chat__footer form * {
-  margin-right: 10px;
+.chat__footer .other-apps {
+  display: flex;
 }
+
+/* .chat__footer form * {
+  margin-right: 10px;
+} */
 
 .chat__footer input {
   border: none;
@@ -207,8 +280,10 @@ button:disabled {
   margin-right: 10px;
 }
 
-.message__title span {
+#time {
   color: #999;
+  float: right;
+  font-size: 0.8rem;
 }
 
 @media (max-width: 600px) {
@@ -220,12 +295,16 @@ button:disabled {
     display: none;
   }
 
-  .chat__footer {
-    flex-direction: column;
+  .chat__main {
+    background-size: 30% !important;
   }
 
-  .chat__footer form {
-    margin-bottom: 10px;
+  .chat__footer {
+    border-radius: 0px !important;
+    border: none !important;
+    border-top: 1px solid #eeeeee !important;
+    margin: 10px !important;
+    flex-direction: column !important;
   }
 
   .chat__footer button {

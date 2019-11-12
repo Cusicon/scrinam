@@ -4,57 +4,94 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <meta http-equiv="X-UA-Compatible" content="ie=edge" />
+    <link rel="shortcut icon" href="/img/parrot-logo.png" type="image/x-icon" />
     <link rel="stylesheet" href="/css/styles.css" />
-    <title>Chat :: Parrot</title>
+    <link rel="stylesheet" href="/css/chat.css" />
+    <link rel="stylesheet" href="/css/icons.css" />
+    <title>Parrot :: Chat Room</title>
   </head>
   <body class="chat">
     <div class="chat__sidebar">
       <h3 style="font-size: 1.5rem;">People</h3>
+      <br />
+      <h3 style="font-size: 1rem;">Room - <span id="roomChatName"></span></h3>
+
       <div id="users"></div>
     </div>
 
-    <div class="chat__main">
+    <div class="chat__main" style="background-blend-mode: luminosity;">
       <ol id="messages" class="chat__messages"></ol>
+
       <div class="chat__footer">
-        <form action="" method="get" id="message-form">
+        <div class="other-apps">
+          <!-- Send location Button -->
+          <button id="send-location" title="Send your location" hidden>
+            <i class="mdi mdi-map-marker-radius"></i>
+          </button>
+
+          <!-- Emoticons Button -->
+          <button id="emoticon" title="Emojis">
+            <i class="mdi mdi-emoticon"></i>
+          </button>
+
+          <!-- Send file Button -->
+          <button id="send-file" title="Send a file">
+            <i class="mdi mdi-file-send"></i>
+          </button>
+        </div>
+        <form method="GET" id="message-form">
+          <!-- Message Text box -->
           <input
             type="text"
             name="message"
             id="message"
             autofocus
             autocomplete="off"
-            placeholder="Type message..."
+            placeholder="Type a message..."
             required
           />
-          <button>Send</button>
+
+          <!-- Send Button -->
+          <button type="submit" id="send" class="green-bg" title="Send message">
+            <!-- <i class="mdi mdi-send"></i> -->
+            <!-- <i class="mdi mdi-arrow-up"></i> -->
+            <i class="mdi mdi-debug-step-out"></i>
+            <!-- Send -->
+          </button>
         </form>
-        <button id="send-location">Send location</button>
       </div>
     </div>
+
     <!-- message-template -->
     <script id="message-template" type="text/template">
-      <li class="message">
-        <div class="message__title">
-          <h4>{{from}}</h4>
-          <span>{{createdAt}}</span>
-        </div>
-        <div class="message__body">
-          <p>{{text}}</p>
+      <li class="message {{type}}">
+        <div class="{{type}}">
+          <div class="message__title">
+            <h4 id="name">{{from}}</h4>
+          </div>
+          <div class="message__body">
+            <p>
+              {{text}}
+              <span id="time">{{createdAt}}</span>
+            </p>
+          </div>
         </div>
       </li>
     </script>
 
     <!-- location-message-template -->
     <script id="location-message-template" type="text/template">
-      <li class="message">
-        <div class="message__title">
-          <h4>{{from}}</h4>
-          <span>{{createdAt}}</span>
-        </div>
-        <div class="message__body">
-          <p>
-            <a href="{{url}}" target="_blank">My current location</a>
-          </p>
+      <li class="message {{type}}">
+        <div class="{{type}}">
+          <div class="message__title">
+            <h4 id="name">{{from}}</h4>
+          </div>
+          <div class="message__body">
+            <p>
+              <a href="{{url}}" target="_blank">My current location</a>
+              <span id="time">{{createdAt}}</span>
+            </p>
+          </div>
         </div>
       </li>
     </script>

@@ -1,0 +1,139 @@
+[name="message"] {
+  border-radius: 50px;
+  /* text-align: center; */
+  padding: 15px 20px !important;
+  margin: 0px 10px !important;
+  background-color: #ffffff !important;
+  box-shadow: -0px 0px 5px #dddddd;
+}
+
+button#send {
+  background-color: #303030;
+  color: #ffffff !important;
+}
+
+button i {
+  font-size: 25px !important;
+  margin-left: 0px !important;
+}
+
+button {
+  margin: 0px 2.5px;
+  background-color: transparent;
+  color: #303030 !important;
+  border-radius: 50px;
+  font-size: 20px;
+  padding: 5px 10px !important;
+}
+
+button:hover {
+  background: none !important;
+}
+
+button:active {
+  transition: 0.05s linear !important;
+  transform: scale(1.2, 1.2);
+}
+
+button:disabled {
+  cursor: default;
+  color: #303030 !important;
+}
+
+.chat__footer {
+  padding: 5px 15px !important;
+  margin: 0px 10px 10px;
+  border-radius: 50px;
+  border: 1px solid #eeeeee;
+  background-color: #f5f5f5;
+}
+
+/* Room Chat Window */
+
+.admin {
+  margin: 5px 0px;
+  text-align: center !important;
+}
+
+.admin .admin {
+  display: inline-block;
+  padding: 5px 10px;
+  background-color: #f8f8f8;
+  box-shadow: 1px 1px 5px #dddddd;
+  border-radius: 5px;
+}
+
+.admin .message__title {
+  display: inline-flex;
+  margin: 0px;
+}
+
+.admin #name {
+  margin: 0px !important;
+}
+
+.admin #time {
+  display: none;
+}
+
+.admin .message__body {
+  display: inline-block;
+}
+
+li.message {
+  width: 100%;
+  float: left;
+}
+
+.message div.__me {
+  background-color: #ffffff;
+  border-radius: 15px 15px 0px;
+  float: right;
+}
+
+.message div.others {
+  border-radius: 0px 15px 15px;
+  background: #ffffff;
+  float: left;
+}
+
+.message div.__me .message__title #name {
+  display: none;
+}
+
+.message div.others .message__body {
+  color: #303030;
+}
+
+.message div.others,
+.message div.__me {
+  padding: 10px 20px;
+  /* width: 300px; */
+  max-width: 300px !important;
+  box-shadow: 1px 1px 3px lightgrey;
+}
+
+.message div.__me .message__body p,
+.message div.others .message__body p {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  word-break: break-all;
+  word-wrap: break-word;
+  margin-right: 10px;
+}
+
+.message div.__me .message__body p #time,
+.message div.others .message__body p #time {
+  margin-left: 10px;
+}
+
+#users li.__me {
+  color: #303030;
+  font-weight: 600;
+}
+
+/* .message.__me {
+  border: 1px solid red !important;
+} */
+
+/* End of Room Chat Window */
