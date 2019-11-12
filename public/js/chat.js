@@ -30,16 +30,10 @@ let alertUserForEmojis = () => {
   }
 };
 
-// Make a word upperCase
-let makeUpperCase = words => {
-  let wordsArr = words.split(" ");
-  for (let i = 0; i < wordsArr.length; i++) {
-    const word = wordsArr[i];
-    word.replace(word.charAt(0), word.charAt(0).toUpperCase());
-    console.log(wordsArr);
-    return word;
-  }
-};
+// Shuffle an array
+function shuffle(array) {
+  array.sort(() => Math.random() - 0.5);
+}
 
 let emoticon = $("#emoticon");
 emoticon.on("click", e => {
@@ -58,7 +52,7 @@ socket.on("connect", () => {
     if (err) {
       window.location.href = "/";
     } else {
-      $("#roomChatName").text(params.room);
+      $("#roomChatName").text(toSentenceCase(params.room));
       console.log("@ Chat Room...");
     }
   });
@@ -81,7 +75,7 @@ socket.on("updateUserList", users => {
           }`,
           id: `${name.toLowerCase()}`
         })
-        .text(name)
+        .text(toSentenceCase(name))
     );
   });
   $("#users").html(ol);

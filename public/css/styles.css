@@ -36,7 +36,6 @@ h3 {
 
 button {
   border: none;
-  background: #8363a1;
   color: white;
   cursor: pointer;
   padding: 10px;
@@ -45,7 +44,6 @@ button {
 
 button:hover {
   border: none;
-  background: #6d5386;
   color: white;
   padding: 10px;
 }
@@ -53,6 +51,14 @@ button:hover {
 button:active {
   transition: 0.1s linear !important;
   transform: scale(1.07, 1.07);
+}
+
+button#joinBtn {
+  background: linear-gradient(
+    325deg,
+    rgba(49, 84, 129, 1) 0%,
+    rgba(39, 107, 130, 1) 100%
+  );
 }
 
 .hide {
@@ -124,12 +130,13 @@ button:active {
     rgba(39, 107, 130, 1) 0%,
     rgba(49, 84, 129, 1) 100%
   ); /* w3c */
+  background: none !important;
 }
 
 .centered-form__form {
-  background: rgba(250, 250, 250, 0.9);
+  /* background: rgba(250, 250, 250, 0.9); */
   background: #ffffff;
-  border: 1px solid #e1e1e1;
+  /* border: 1px solid #e1e1e1; */
   border-radius: 5px;
   padding: 20px 35px;
   margin: 20px;

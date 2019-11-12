@@ -8,7 +8,11 @@
 }
 
 button#send {
-  background-color: #303030;
+  background: linear-gradient(
+    325deg,
+    rgba(49, 84, 129, 1) 0%,
+    rgba(39, 107, 130, 1) 100%
+  );
   color: #ffffff !important;
 }
 
@@ -86,19 +90,21 @@ li.message {
 }
 
 .message div.__me {
-  background-color: #ffffff;
-  border-radius: 15px 15px 0px;
+  border-radius: 10px 10px 0px;
+  background: #eeeeee !important;
   float: right;
 }
 
 .message div.others {
-  border-radius: 0px 15px 15px;
-  background: #ffffff;
+  border-radius: 0px 10px 10px;
+  background: #eeeeee !important;
   float: left;
 }
 
+.message div.__me .message__title,
 .message div.__me .message__title #name {
   display: none;
+  margin: none;
 }
 
 .message div.others .message__body {
@@ -108,9 +114,8 @@ li.message {
 .message div.others,
 .message div.__me {
   padding: 10px 20px;
-  /* width: 300px; */
   max-width: 300px !important;
-  box-shadow: 1px 1px 3px lightgrey;
+  /* box-shadow: 1px 1px 3px lightgrey; */
 }
 
 .message div.__me .message__body p,
@@ -128,7 +133,6 @@ li.message {
 }
 
 #users li.__me {
-  color: #303030;
   font-weight: 600;
 }
 
