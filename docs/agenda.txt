@@ -1,15 +1,17 @@
-Parrot
-I want to make a simple web chat system for Aptech Parrotents.
+Scrinam
+I want to make a simple web chat system for Aptech Scrinaments.
 
-To reduce noise making excessively, Also to aid in sending of files and installation kit for parrotents and faculties.
+To reduce noise making excessively, Also to aid in sending of files and installation kit for scrinaments and faculties.
 
 
 Key features
 
 Chats system
 
-Group & Private Groups ( Based on classes )
+Groups & Private Groups ( Based on classes )
 
 Files transfers
 
-Groups: Developers And Gamers
+if windows.blur() || newMessage "is fired"
+    let not = new Notification()
+        not.

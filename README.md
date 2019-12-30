@@ -1,3 +1,3 @@
-# Parrot
+# Scrinam
 
 A chat system

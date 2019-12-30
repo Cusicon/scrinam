@@ -2,6 +2,7 @@ const http = require("http");
 const express = require("express");
 const socketIO = require("socket.io");
 const path = require("path");
+const moment = require("moment");
 const { generateMessage, generateLocationMessage } = require("./utils/message");
 const { isRealString } = require("./utils/validation");
 const { Users } = require("./utils/users");
@@ -14,6 +15,10 @@ let io = socketIO(server);
 let users = new Users();
 
 app.use(express.static(publicPath));
+
+app.get("/", (req, res) => {
+  res.sendFile("./index.html");
+});
 
 // Init socket connection
 io.on("connection", socket => {
@@ -32,7 +37,14 @@ io.on("connection", socket => {
     io.to(params.room).emit("updateUserList", users.getUserList(params.room));
 
     // Greet new user.
-    socket.emit("newMessage", generateMessage("Admin", `Welcome to Parrot`));
+    socket.emit("newMessage", generateMessage(`Admin`, `Welcome to Scrinam`));
+    socket.emit(
+      "newMessage",
+      generateMessage(
+        `Admin :: ${moment().format("dddd")},`,
+        moment().format("MMMM D")
+      )
+    );
 
     // Alert others of a new user joining.
     socket.broadcast
@@ -66,6 +78,13 @@ io.on("connection", socket => {
       );
     }
     callback();
+  });
+
+  socket.on("new_notification", function(data) {
+    io.sockets.emit("show_notification", {
+      title: data.title,
+      message: data.message
+    });
   });
 
   // Disconnect socket
