@@ -3,11 +3,12 @@ let socket = io();
 let messageTextBox = $("[name=message]");
 let sendBtn = $("#send");
 let sendFileBtn = $("#send-file");
+let messages = $("#messages");
+
 
 // Scroll To Bottom
 let scrollToBottom = () => {
   // Selectors
-  let messages = $("#messages");
   let newMessage = messages.children("li:last-child");
 
   // Heights
@@ -56,10 +57,10 @@ function setNotification(from, text) {
   if (from.toLowerCase().includes("admin")) {
     return "";
   } else {
-    window.onblur = e => {
+    // window.onchange = () => {
       showDesktopNotification(from, text);
       sendNodeNotification(from, text);
-    };
+    // };
   }
 }
 
@@ -237,7 +238,7 @@ socket.on("newMessage", message => {
   });
   $("#messages").append(messageTemplateHtml);
 
-  message.from.toLowerCase() === params.name
+  message.from.toLowerCase() === params.name.toLowerCase()
     ? ""
     : setNotification(message.from, message.text);
   scrollToBottom();
@@ -296,4 +297,3 @@ locationButton.on("click", e => {
 //   e.preventDefault();
 //   e.returnValue = "";
 // });
-

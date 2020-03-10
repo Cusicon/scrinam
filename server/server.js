@@ -66,7 +66,9 @@ io.on("connection", socket => {
         generateMessage(user.name, message.text)
       );
     }
-    callback();
+    if(callback) {
+      callback();
+    }
   });
 
   socket.on("createLocationMessage", (coords, callback) => {
@@ -80,10 +82,13 @@ io.on("connection", socket => {
     callback();
   });
 
-  socket.on("new_notification", function(data) {
-    io.sockets.emit("show_notification", {
-      title: data.title,
-      message: data.message
+  socket.on("new_notification", function(data, callback) {
+    let recievers = users.users.filter(user => user.id === socket.id);
+    recievers.forEach(user => {
+      io.to(user.id).emit("show_notification", {
+        title: data.title,
+        message: data.message
+      });  
     });
   });
 
