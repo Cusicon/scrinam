@@ -37,6 +37,8 @@ button:disabled {
 }
 
 .chat__footer {
+  display: flex;
+  flex-shrink: 0;
   padding: 5px 15px !important;
   margin: 0px 10px 10px;
   border-radius: 50px;
@@ -90,8 +92,8 @@ button:disabled {
   border: 1px solid #eaeaea;
   background-repeat: no-repeat;
   background-position: center;
-  background-size: 50%;
-  background-image: url("/img/scrinam.png");
+  background-size: 30%;
+  background-image: url("/img/favicon.png");
 }
 
 .chat__sidebar h3 {
@@ -114,27 +116,15 @@ button:disabled {
 }
 
 .chat__main {
+  background-image: url("/img/favicon.png");
+  background-size: 5%;
+  background-repeat: repeat;
+  background-blend-mode: screen;
   display: flex;
   flex-direction: column;
   height: 100vh;
   width: 100%;
   background-color: #fafafa;
-  /* background-image: url("/img/scrinam.png"); */
-  background-blend-mode: multiply;
-  background-size: 15%;
-}
-
-.chat__messages {
-  flex-grow: 1;
-  overflow-y: scroll;
-  -webkit-overflow-scrolling: touch;
-}
-
-.chat__footer {
-  display: flex;
-  padding: 10px;
-  /* height: 60px !; */
-  flex-shrink: 0;
 }
 
 .chat__footer form {
@@ -152,13 +142,15 @@ button:disabled {
   flex-grow: 1;
 }
 
-.chat__messages {
-  list-style-type: none;
-  padding: 10px 20px;
-}
-
 .message {
   padding: 10px;
+}
+
+.chat__messages {
+  flex-grow: 1;
+  overflow-y: auto;
+  list-style-type: none;
+  padding: 0px 5px;
 }
 
 .message__title {
@@ -182,20 +174,51 @@ button:disabled {
     font-size: 1rem;
   }
 
+  .showMenu {
+    left: 0px !important;
+  }
+
+  button#menu-button {
+    position: absolute;
+    top: 12.5px;
+    right: 10px;
+    display: block;
+    color: rgba(49, 84, 129, 1) !important;
+    background: #ffffff;
+    border-radius: 10px;
+  }
+
+  button#menu-button * {
+    font-size: 1.5rem !important;
+  }
+
+  button#out-button {
+    position: absolute;
+    top: 12.5px;
+    right: 0px;
+    display: block;
+    float: right !important;
+    color: rgba(49, 84, 129, 1) !important;
+    background: #ffffff;
+    border-radius: 10px;
+  }
+
+  button#out-button * {
+    font-size: 1.5rem !important;
+  }
+
   .chat__sidebar {
-    display: none;
+    position: absolute;
+    top: 0px;
+    left: -1000px;
+    width: 300px;
+    height: 100%;
+    z-index: 2999;
+    box-shadow: 30px 0px 50vh #adadad41;
   }
 
   .chat__main {
-    background-size: 30% !important;
-  }
-
-  .chat__footer {
-    border-radius: 0px !important;
-    border: none !important;
-    border-top: 1px solid #eeeeee !important;
-    margin: 10px !important;
-    flex-direction: column !important;
+    background-size: 20% !important;
   }
 
   .chat__footer button {
