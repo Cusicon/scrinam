@@ -1,3 +1,3 @@
 # Scrinam
 
-A chat system
+An anonymous user-defined messaging app.

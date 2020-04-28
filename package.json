@@ -1,7 +1,7 @@
 {
   "name": "scrinam",
   "version": "1.0.0",
-  "description": "A chat system",
+  "description": "An anonymous user-defined messaging app.",
   "main": "./server/server.js",
   "directories": {
     "doc": "docs"
