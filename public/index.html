@@ -1,87 +1,82 @@
 <!DOCTYPE html>
 <html lang="en">
-  <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <meta http-equiv="X-UA-Compatible" content="ie=edge" />
-    <link rel="shortcut icon" href="/img/favicon.png" type="image/x-icon" />
-    <link rel="stylesheet" href="/css/dark.css" />
-    <link rel="stylesheet" href="/css/styles.css" />
-    <title>Scrinam :: Join a Room</title>
-  </head>
-  <body class="centered-form">
-    <div class="centered-form__form">
-      <form action="/chat.html" method="GET">
-        <div class="form-field">
+
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta http-equiv="X-UA-Compatible" content="ie=edge" />
+  <link rel="shortcut icon" href="/img/favicon.png" type="image/x-icon" />
+  <link rel="stylesheet" href="/css/icons.css" />
+  <link rel="stylesheet" href="/css/mainStyle.css" />
+  <title>Scrinam :: Join a Room</title>
+</head>
+
+<body class="centered-form">
+  <div class="centered-form__form">
+    <form method="GET" id="join-form">
+      <div class="form-field">
+        <a href="/">
           <h3 style="font-size: 1rem;">
-            <img
-              src="/img/scrinam.png"
-              alt="Logo"
-              width="125"
-              style="margin-bottom: 5px;"
-            />
-            <h3 class="hide" style="font-size: 1rem;">
-              Join a Room
-            </h3>
+            <img src="/img/favicon.png" alt="Logo" width="50" style="margin-bottom: 5px;" />
+            <center>
+              <img src="/img/scrinam-text.png" alt="Logo" width="75" style="margin-bottom: 5px;" />
+            </center>
           </h3>
-        </div>
-        <div class="form-field">
-          <label for="name">Screen name</label>
-          <input
-            type="text"
-            name="name"
-            id="name"
-            maxlength="20"
-            required
-            autofocus
-            placeholder="Any name"
-          />
-        </div>
-        <div class="form-field">
-          <label for="room">Room</label>
-          <input
-            type="text"
-            name="room"
-            id="room"
-            autocomplete
-            maxlength="20"
-            required
-            placeholder="Ask your roommates... "
-          />
+        </a>
+      </div>
+      <div class="form-field">
+        <label for="name">Screen name</label>
+        <input type="text" name="name" id="name" maxlength="13" required autofocus placeholder="Any name" />
+      </div>
+      <div class="form-field">
+        <label for="room">Room</label>
+        <input type="text" name="room" id="room" autocomplete maxlength="17" required
+          placeholder="Ask your roommates... " />
+      </div>
 
-          <!-- <select name="room" id="room" required>
-            <option value=""> -- Select a Room -- </option>
-            <option value="Developers">Developers</option>
-            <option value="Gamers">Gamers</option>
-          </select> -->
-        </div>
-        <div class="form-field">
-          <button id="joinBtn">Join</button>
-        </div>
-        <div class="creator" style="text-align: center;">
-          <!-- <p>Created By</p> -->
-          <a
-            href="https://github.com/Cusicon"
-            target="_blank"
-            style="text-decoration: none;"
-          >
-            <p>See Creator...</p>
-          </a>
-        </div>
-      </form>
-    </div>
-    <div class="creator hide">
-      <p>Made By</p>
-      <p>Success Chukwu @ 2019</p>
-      <a
-        href="https://github.com/Cusicon"
-        target="_blank"
-        style="text-decoration: none;"
-      >
-        See more...
-      </a>
-    </div>
+      <div class="suggestions">
+        <!-- Suggestions -->
+        <center>
+          <b>Most popular rooms: </b>
+          <br><br>
+          <div class="suggestedRoom" id="suggestedRoom"
+            onclick="document.getElementById('room').value = document.getElementById('suggestedRoom').innerText;">
+            <span class="mdi mdi-account-multiple" style="padding-right: 5px;"></span><b>Gossip</b>
+          </div>
+        </center>
+      </div>
 
-    <script src="js/main.js"></script>
-  </body>
+      <div class="form-field">
+        <button id="joinBtn">Join</button>
+      </div>
+      <div class="creator" style="text-align: center;">
+        <a href="https://github.com/Cusicon" target="_blank" style="text-decoration: none;">
+          <p>See Creator...</p>
+        </a>
+      </div>
+    </form>
+  </div>
+  <div class="creator hide">
+    <p>Made By</p>
+    <p>Success Chukwu @ 2019</p>
+    <a href="https://github.com/Cusicon" target="_blank" style="text-decoration: none;">
+      See more...
+    </a>
+  </div>
+
+  <script src="/js/libs/jquery-3.1.1.min.js"></script>
+  <script src="js/main.js"></script>
+  </script>
+
+  <script>
+    $("#join-form").on("submit", (e) => {
+      e.preventDefault();
+      var usernameVal = $(`#join-form input[name="name"]`).val().trim();
+      var roomVal = $(`#join-form input[name="room"]`).val().trim();
+      var url = `${location.origin}/chat.html?name=${usernameVal}&room=${roomVal}`;
+      location.replace(url);
+    });
+  </script>
+</body>
+
 </html>

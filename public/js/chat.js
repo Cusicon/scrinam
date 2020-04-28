@@ -2,7 +2,9 @@ let socket = io();
 
 let messageTextBox = $("[name=message]");
 let sendBtn = $("#send");
-let sendFileBtn = $("#send-file");
+let emoticon = $("#emoticon");
+let menuButton = $("#menu-button");
+let messages = $("#messages");
 
 // Scroll To Bottom
 let scrollToBottom = () => {
@@ -27,13 +29,43 @@ let scrollToBottom = () => {
 
 // Alert User For Emojis
 let alertUserForEmojis = () => {
-  const { userAgent } = window.clientInformation;
+  const userAgent = navigator.userAgent;
   let result = userAgent.toLowerCase();
+
   if (result.includes("windows")) {
-    alert(`Press ('Windows key' + '.') for emojis on input.`);
+    $(".alertMessages")
+      .html(
+        `<span id="emoticonSuggestion">Press ( 'Windows key' + '.' ) at once</span>`
+      )
+      .fadeIn(200);
   } else if (result.includes("macintosh")) {
-    alert(`Right click and select "Emojis & Symbols" on input.`);
+    $(".alertMessages")
+      .html(
+        `<span id="emoticonSuggestion">Press ( Command + Ctrl + Space ) at once</span>`
+      )
+      .fadeIn(200);
+  } else if (result.includes("android") || result.includes("iphone")) {
+    $(".alertMessages")
+      .html(
+        `<span id="emoticonSuggestion">Check the bottom of your keyboard</span>`
+      )
+      .fadeIn(200);
+  } else {
+    $(".alertMessages")
+      .html(`<span id="emoticonSuggestion">Check your keyboard</span>`)
+      .fadeIn(200);
   }
+  setTimeout(() => {
+    $(".alertMessages").fadeOut(200);
+  }, 1500);
+};
+
+let showUsersonMobile = () => {
+  $(".chat__sidebar").toggleClass("showMenu");
+};
+
+let hideUsersonMobile = () => {
+  $(".chat__sidebar").removeClass("showMenu");
 };
 
 // NOTIFICATIONS
@@ -43,7 +75,7 @@ let alertUserForEmojis = () => {
  * @param {type} data
  * @returns {undefined}
  */
-socket.on("show_notification", function(data) {
+socket.on("show_notification", function (data) {
   showDesktopNotification(data.title, data.message);
 });
 
@@ -56,8 +88,10 @@ function setNotification(from, text) {
   if (from.toLowerCase().includes("admin")) {
     return "";
   } else {
-      showDesktopNotification(from, text);
-      sendNodeNotification(from, text);
+    // window.onchange = () => {
+    showDesktopNotification(from, text);
+    sendNodeNotification(from, text);
+    // };
   }
 }
 
@@ -70,7 +104,7 @@ function requestNotificationPermissions() {
     window.Notification || window.mozNotification || window.webkitNotification;
 
   if (Notification.permission !== "denied") {
-    Notification.requestPermission(function(permission) {});
+    Notification.requestPermission(function (permission) {});
   }
 }
 
@@ -87,7 +121,7 @@ function showDesktopNotification(title, message) {
   requestNotificationPermissions();
   let instance = new Notification(title, {
     body: message,
-    icon: "./img/favicon.png"
+    icon: "./img/favicon.png",
   });
 
   let audio = new Audio("./assets/notify.mp3");
@@ -95,18 +129,18 @@ function showDesktopNotification(title, message) {
     instance;
   });
 
-  instance.onclick = function() {
+  instance.onclick = function () {
     window.open("", "scrinam");
     window.focus();
     instance.close();
   };
-  instance.onerror = function() {
+  instance.onerror = function () {
     // Something to do
   };
-  instance.onshow = function() {
+  instance.onshow = function () {
     // Something to do
   };
-  instance.onclose = function() {
+  instance.onclose = function () {
     // Something to do
   };
   if (sound) {
@@ -125,22 +159,22 @@ function showDesktopNotification(title, message) {
 function sendNodeNotification(title, message) {
   socket.emit("new_notification", {
     message: message,
-    title: title
+    title: title,
   });
 }
 
 // End of NOTIFICATIONS
 
 let setSendButton = () => {
-  messageTextBox.on("input", e => {
+  messageTextBox.on("input", (e) => {
     if (e.target.value !== "") {
       sendBtn.removeClass("hide");
       sendBtn.addClass("show");
 
-      sendFileBtn.removeClass("show");
-      sendFileBtn.addClass("hide");
+      emoticon.removeClass("show");
+      emoticon.addClass("hide");
     } else {
-      sendFileBtn.removeClass("hide").addClass("show");
+      emoticon.removeClass("hide").addClass("show");
       sendBtn.removeClass("show").addClass("hide");
     }
   });
@@ -153,9 +187,16 @@ function shuffle(array) {
 }
 
 // Emojis Icon
-let emoticon = $("#emoticon");
-emoticon.on("click", e => {
+emoticon.on("click", (e) => {
   alertUserForEmojis();
+});
+
+menuButton.on("click", (e) => {
+  showUsersonMobile();
+});
+
+$(".chat__sidebar, .chat__main > ol.chat__messages").on("click", (e) => {
+  hideUsersonMobile();
 });
 
 // Global
@@ -164,9 +205,9 @@ let params = $.deparam(window.location.search);
 socket.on("connect", () => {
   console.log("Connected to server");
 
-  socket.emit("join", params, err => {
+  socket.emit("join", params, (err) => {
     if (err) {
-      window.location.href = "/";
+      window.location.replace("/");
     } else {
       $("#roomChatName").text(toSentenceCase(params.room));
       console.log("@ Chat Room...");
@@ -178,10 +219,10 @@ socket.on("disconnect", () => {
   console.log("Disconnected from server");
 });
 
-socket.on("updateUserList", users => {
+socket.on("updateUserList", (users) => {
   let ol = $("<ol></ol>");
 
-  users.forEach(user => {
+  users.forEach((user) => {
     const { id, name } = user;
     ol.append(
       $(`<li></li>`)
@@ -189,7 +230,7 @@ socket.on("updateUserList", users => {
           class: `${
             params.name.toLowerCase() === name.toLowerCase() ? "__me" : ""
           }`,
-          id: `${name.toLowerCase()}`
+          id: `${name.toLowerCase()}`,
         })
         .text(toSentenceCase(name))
     );
@@ -200,24 +241,39 @@ socket.on("updateUserList", users => {
   __me.remove();
   $("#users ol").prepend(
     __me.append(
-      '<i class="mdi mdi-account" style="float: right; font-size: 20px;"></i>'
+      `<a href="javascript:void(0);" onclick="location.replace(location.origin);"><i class="mdi mdi-logout-variant" style="float: right; font-size: 1.5rem; padding: 0px 2.5px;"></i></a> <i class="mdi mdi-webcam" style="float: right; font-size: 1.5rem; padding: 0px 2.5px;"></i>`
     )
   );
 });
 
 // Message form
-$("#message-form").on("submit", e => {
+$("#message-form").on("submit", (e) => {
   e.preventDefault();
+
+  var newVals = [];
+  messageTextBox
+    .val()
+    .trim()
+    .split(" ")
+    .forEach((text) => {
+      if (text.includes("http")) {
+        text = `[${text}]`;
+      }
+      newVals.push(text);
+    });
+  messageTextBox.val(newVals.join(" "));
+
   socket.emit("createMessage", { text: messageTextBox.val() }, () => {
     messageTextBox.val("");
-    sendFileBtn.removeClass("hide").addClass("show");
+    emoticon.removeClass("hide").addClass("show");
     sendBtn.removeClass("show").addClass("hide");
   });
 });
 
 // New message
-socket.on("newMessage", message => {
+socket.on("newMessage", (message) => {
   let formattedTime = moment(message.createdAt).format("h:mm a");
+  let anyurlMessageTemplate = $("#anyurl-message-template").html();
   let messageTemplate = !message.from.toLowerCase().includes("admin")
     ? $("#message-template").html()
     : $("#admin-message-template").html();
@@ -231,7 +287,7 @@ socket.on("newMessage", message => {
       : params.name.toLowerCase() === message.from.toLowerCase()
       ? "__me"
       : "others",
-    createdAt: formattedTime
+    createdAt: formattedTime,
   });
   $("#messages").append(messageTemplateHtml);
 
@@ -242,7 +298,7 @@ socket.on("newMessage", message => {
 });
 
 // New location message & Render to Dom
-socket.on("newLocationMessage", locationMessage => {
+socket.on("newLocationMessage", (locationMessage) => {
   let formattedTime = moment(message.createdAt).format("h:mm a");
   let messageTemplate = $("#location-message-template").html();
   let messageTemplateHtml = Mustache.render(messageTemplate, {
@@ -252,14 +308,14 @@ socket.on("newLocationMessage", locationMessage => {
       params.name.toLowerCase() === locationMessage.from.toLowerCase()
         ? "__me"
         : "others",
-    createdAt: formattedTime
+    createdAt: formattedTime,
   });
   $("#messages").append(messageTemplateHtml);
   scrollToBottom();
 });
 
 let locationButton = $("#send-location");
-locationButton.on("click", e => {
+locationButton.on("click", (e) => {
   if (!navigator.geolocation) {
     return alert("Geolocation not supported by your browser!");
   }
@@ -269,7 +325,7 @@ locationButton.on("click", e => {
     .html('<i class="mdi mdi-dots-horizontal"></i>');
 
   navigator.geolocation.getCurrentPosition(
-    position => {
+    (position) => {
       const { latitude, longitude } = position.coords;
       socket.emit("createLocationMessage", { latitude, longitude }, () =>
         console.log("location sent.")

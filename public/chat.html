@@ -1,90 +1,83 @@
 <!DOCTYPE html>
 <html lang="en">
-  <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <meta http-equiv="X-UA-Compatible" content="ie=edge" />
-    <link rel="shortcut icon" href="/img/favicon.png" type="image/x-icon" />
-    <link rel="stylesheet" href="/css/styles.css" />
-    <link rel="stylesheet" href="/css/chat.css" />
-    <link rel="stylesheet" href="/css/icons.css" />
-    <title>Scrinam :: Chat Room</title>
-  </head>
-  <body class="chat">
-    <div class="chat__sidebar">
-      <h3 style="font-size: 1.5rem;">People</h3>
-      <br />
-      <h3 style="font-size: 1rem;">Room - <span id="roomChatName"></span></h3>
 
-      <div id="users"></div>
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <meta http-equiv="X-UA-Compatible" content="ie=edge" />
+  <link rel="shortcut icon" href="/img/favicon.png" type="image/x-icon" />
+  <link rel="stylesheet" href="/css/mainStyle.css" />
+  <link rel="stylesheet" href="/css/chat.css" />
+  <link rel="stylesheet" href="/css/icons.css" />
+  <title>Scrinam :: Chat Room</title>
+</head>
 
-      <br><br><br>
+<body class="chat">
+  <div class="chat__sidebar">
+    <h3 style="font-size: 1.5rem;">People</h3>
+    <br />
+    <h3 style="font-size: 1rem;">Room - <span id="roomChatName"></span></h3>
 
-      <h3 style="font-size: 1rem;">Room Files</h3>
-      <div id="uploaded_files"></div>
-    </div>
+    <div id="users"></div>
+  </div>
 
-    <div class="chat__main">
-      <ol id="messages" class="chat__messages"></ol>
+  <div class="chat__main">
+    <!-- Mobile menu Button -->
+    <button id="menu-button" class="hide">
+      <i class="mdi mdi mdi-backburger"></i>
+    </button>
 
-      <div class="chat__footer">
-        <div class="other-apps">
-          <!-- Send location Button -->
-          <button id="send-location" title="Send your location">
-            <i class="mdi mdi-map-marker-radius"></i>
-          </button>
+    <ol id="messages" class="chat__messages"></ol>
 
-          <!-- Emoticons Button -->
-          <button id="emoticon" title="Emojis">
-            <i class="mdi mdi-emoticon"></i>
-          </button>
-        </div>
-        <form method="GET" id="message-form">
-          <!-- Message Text box -->
-          <input
-            type="text"
-            name="message"
-            id="message"
-            autofocus
-            autocomplete="off"
-            placeholder="Type a message..."
-            required
-          />
+    <div class="alertMessages" id="alertMessages"></div>
+    <div class="chat__footer">
+      <div class="other-apps">
+        <!-- Send location Button -->
+        <button id="send-location" title="Send your location">
+          <i class="mdi mdi-map-marker-radius"></i>
+        </button>
+      </div>
+      <form method="GET" id="message-form">
+        <!-- Message Text box -->
+        <input type="text" name="message" id="message" autofocus autocomplete="off" placeholder="Type a message..."
+          required />
 
-          <!-- Send Button -->
-          <button type="submit" id="send" class="hide" title="Send message">
-            <!-- <i class="mdi mdi-send"></i> -->
-            <!-- <i class="mdi mdi-arrow-up"></i> -->
-            <i class="mdi mdi-debug-step-out"></i>
-            <!-- Send -->
-          </button>
-        </form>
-        <div class="other-apps">
-          <!-- Send file Button -->
-            <a href="/upload" target="_blank"><i id="paperclip-icon" class="mdi mdi-paperclip"></i></a>
-        </div>
+        <!-- Send Button -->
+        <button type="submit" id="send" class="hide" title="Send message">
+          <i class="mdi mdi-debug-step-out"></i>
+        </button>
+      </form>
+      <div class="other-apps">
+        <!-- Emoticons Button -->
+        <button id="emoticon" class="show" title="Emojis">
+          <i class="mdi mdi-emoticon"></i>
+        </button>
+
+        <!-- Send file Button -->
+        <a href="/upload" target="_blank"><i id="paperclip-icon" class="mdi mdi-paperclip"></i></a>
       </div>
     </div>
+  </div>
 
-    <!-- admin-message-template -->
-    <script id="admin-message-template" type="text/template">
-      <li class="message admin">
-        <div class="admin">
-          <div class="message__title">
-            <h4 id="name">{{from}}</h4>
-          </div>
-          <div class="message__body">
-            <p id="text">
-              {{text}}
-              <span id="time">{{createdAt}}</span>
-            </p>
-          </div>
+  <!-- admin-message-template -->
+  <script id="admin-message-template" type="text/template">
+    <li class="message admin">
+      <div class="admin">
+        <div class="message__title">
+          <h4 id="name">{{from}}</h4>
         </div>
-      </li>
-    </script>
+        <div class="message__body">
+          <p id="text">
+            {{text}}
+            <span id="time">{{createdAt}}</span>
+          </p>
+        </div>
+      </div>
+    </li>
+  </script>
 
-    <!-- message-template -->
-    <script id="message-template" type="text/template">
+  <!-- message-template -->
+  <script id="message-template" type="text/template">
       <li class="message {{type}}">
         <div class="{{type}}">
           <div class="message__title">
@@ -92,7 +85,7 @@
           </div>
           <div class="message__body">
             <p id="text">
-              {{text}}
+              <span id="mainText">{{text}}</span>
               <span id="time">{{createdAt}}</span>
             </p>
           </div>
@@ -100,30 +93,49 @@
       </li>
     </script>
 
-    <!-- location-message-template -->
-    <script id="location-message-template" type="text/template">
-      <li class="message {{type}}">
-        <div class="{{type}}">
-          <div class="message__title">
-            <h4 id="name">{{from}}</h4>
-          </div>
-          <div class="message__body">
-            <p>
-              <a href="{{url}}" target="_blank">My current location</a>
-              <span id="time">{{createdAt}}</span>
-            </p>
-          </div>
+  <!-- location-message-template -->
+  <script id="location-message-template" type="text/template">
+    <li class="message {{type}}">
+      <div class="{{type}}">
+        <div class="message__title">
+          <h4 id="name">{{from}}</h4>
         </div>
-      </li>
-    </script>
+        <div class="message__body">
+          <p>
+            <a href="{{url}}" target="_blank">My current location</a>
+            <span id="time">{{createdAt}}</span>
+          </p>
+        </div>
+      </div>
+    </li>
+  </script>
 
-    <script src="/socket.io/socket.io.js"></script>
-    <script src="/js/libs/jquery-3.1.1.min.js"></script>
-    <script src="/js/libs/moment.js"></script>
-    <script src="/js/libs/mustache.js"></script>
-    <script src="/js/libs/deparam.js"></script>
-    <script src="/js/libs/word-casing.js"></script>
-    <script src="/js/chat.js"></script>
-    <script src="/js/main.js"></script>
-  </body>
+  <!-- anyurl-message-template -->
+  <script id="anyurl-message-template" type="text/template">
+    <li class="message {{type}}">
+      <div class="{{type}}">
+        <div class="message__title">
+          <h4 id="name">{{from}}</h4>
+        </div>
+        <div class="message__body">
+          <p>
+            <a href="{{url}}" target="_blank">{{url}}</a>
+            <span id="time">{{createdAt}}</span>
+          </p>
+        </div>
+      </div>
+    </li>
+  </script>
+
+
+  <script src="/socket.io/socket.io.js"></script>
+  <script src="/js/libs/jquery-3.1.1.min.js"></script>
+  <script src="/js/libs/moment.js"></script>
+  <script src="/js/libs/mustache.js"></script>
+  <script src="/js/libs/deparam.js"></script>
+  <script src="/js/libs/word-casing.js"></script>
+  <script src="/js/chat.js"></script>
+  <script src="/js/main.js"></script>
+</body>
+
 </html>

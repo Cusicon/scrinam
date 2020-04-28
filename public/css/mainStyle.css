@@ -167,6 +167,23 @@ button#joinBtn {
   height: 40px;
 }
 
-a {
-  font-weight: 600;
+.suggestedRoom {
+  display: inline-block;
+  padding: 5px;
+  margin: 2.5px;
+  border: 1px solid #e1e1e1;
+  border-radius: 10px;
+  cursor: pointer;
+}
+
+.alertMessages {
+  color: #ffffff;
+  padding: 10px;
+  text-align: center;
+}
+
+.alertMessages span {
+  padding: 5px 10px;
+  border-radius: 50px;
+  background: rgba(49, 84, 129, 1);
 }
