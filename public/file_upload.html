@@ -1,0 +1,48 @@
+<html lang="en">
+
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>Test Upload</title>
+        <link rel="stylesheet" href="/css/bootstrap.min.css">
+        <style>
+            #uploadForm{
+                margin: 20px auto;
+                width: 200px;
+            }
+
+            .upload{
+                width: 300px;
+                margin: 20px auto;
+            }
+
+            .btn-fix{
+                background-color: rgb(175, 193, 211);
+                color: black;
+            }
+
+            .btn-fix:hover{
+                background-color: lightblue;
+                cursor: pointer;
+            }
+        </style>
+    </head>
+
+    <body>
+        <div class="container">
+            <form id="uploadForm" action="/upload" method="post" enctype="multipart/form-data">
+                <div class="form-group">
+                    <label for="filetoupload">Pick a file to upload:</label>
+                    <input class="upload" type="file" name="filetoupload" multiple>
+                    <input id="btn_upload" class="btn-fix form-control" type="submit">
+                </div>
+            </form>
+        </div>
+    </body>
+
+    <script>
+        document.getElementById("btn_upload").addEventListener('click', (ev) => {
+            alert('Uploading file(s)...');
+        })
+    </script>
+</html>

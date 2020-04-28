@@ -17,6 +17,11 @@
       <h3 style="font-size: 1rem;">Room - <span id="roomChatName"></span></h3>
 
       <div id="users"></div>
+
+      <br><br><br>
+
+      <h3 style="font-size: 1rem;">Room Files</h3>
+      <div id="uploaded_files"></div>
     </div>
 
     <div class="chat__main">
@@ -56,10 +61,7 @@
         </form>
         <div class="other-apps">
           <!-- Send file Button -->
-          <button id="send-file" class="show" title="Send a file">
-            <i class="mdi mdi-paperclip"></i>
-            <!-- <i class="mdi mdi-file-send"></i> -->
-          </button>
+            <a href="/upload" target="_blank"><i id="paperclip-icon" class="mdi mdi-paperclip"></i></a>
         </div>
       </div>
     </div>

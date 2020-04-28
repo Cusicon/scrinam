@@ -3,12 +3,11 @@ let socket = io();
 let messageTextBox = $("[name=message]");
 let sendBtn = $("#send");
 let sendFileBtn = $("#send-file");
-let messages = $("#messages");
-
 
 // Scroll To Bottom
 let scrollToBottom = () => {
   // Selectors
+  let messages = $("#messages");
   let newMessage = messages.children("li:last-child");
 
   // Heights
@@ -57,10 +56,8 @@ function setNotification(from, text) {
   if (from.toLowerCase().includes("admin")) {
     return "";
   } else {
-    // window.onchange = () => {
       showDesktopNotification(from, text);
       sendNodeNotification(from, text);
-    // };
   }
 }
 
@@ -293,7 +290,7 @@ locationButton.on("click", e => {
 });
 
 // Fires an alert before a user closes the chat tab or window.
-// window.addEventListener("beforeunload", function(e) {
-//   e.preventDefault();
-//   e.returnValue = "";
-// });
+window.addEventListener("beforeunload", function(e) {
+  e.preventDefault();
+  e.returnValue = "";
+});

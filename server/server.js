@@ -1,8 +1,10 @@
 const http = require("http");
+const fs = require('fs');
 const express = require("express");
 const socketIO = require("socket.io");
 const path = require("path");
 const moment = require("moment");
+const formidable = require('formidable');
 const { generateMessage, generateLocationMessage } = require("./utils/message");
 const { isRealString } = require("./utils/validation");
 const { Users } = require("./utils/users");
@@ -18,6 +20,45 @@ app.use(express.static(publicPath));
 
 app.get("/", (req, res) => {
   res.sendFile("./index.html");
+});
+
+app.get('/upload', (req, res) => {
+  res.sendFile('file_upload.html', { root: publicPath });
+});
+
+app.post("/upload", (req, res, next) => {
+  const form = new formidable.IncomingForm({
+    multiples: true
+  });
+  // Parse form data and upload file
+  form.parse(req, (err, fields, files) => {
+    if (err) {
+      console.log(err);
+      return;
+    }
+    if (!Array.isArray(files.filetoupload)){
+      var oldpath = files.filetoupload.path;
+      var newpath = './uploadedFiles/' + files.filetoupload.name;
+      fs.rename(oldpath, newpath, function (err) {
+        if (err) {
+          console.log(err);
+        };
+      });
+    } else {
+      files.filetoupload.forEach(file => {
+        var oldpath = file.path;
+        var newpath = './uploadedFiles/' + file.name;
+        fs.rename(oldpath, newpath, function (err) {
+          if (err) {
+            console.log(err);
+          };
+        });
+      });
+    };
+    res.write('<script>alert("File(s) have been uploaded.");</script>');
+    res.write('<script>window.close()</script>');
+    res.end();
+  });
 });
 
 // Init socket connection
@@ -90,6 +131,9 @@ io.on("connection", socket => {
         message: data.message
       });  
     });
+    if (callback) {
+      callback();
+    }
   });
 
   // Disconnect socket
