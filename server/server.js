@@ -1,10 +1,9 @@
 const http = require("http");
-const fs = require('fs');
 const express = require("express");
 const socketIO = require("socket.io");
 const path = require("path");
 const moment = require("moment");
-const formidable = require('formidable');
+const multer = require('multer');
 const { generateMessage, generateLocationMessage } = require("./utils/message");
 const { isRealString } = require("./utils/validation");
 const { Users } = require("./utils/users");
@@ -16,6 +15,14 @@ let server = http.createServer(app);
 let io = socketIO(server);
 let users = new Users();
 
+const fileStorage = multer.diskStorage({
+  destination: 'uploadedFiles',
+  filename: (req, file, cb) => {
+    cb(null, file.originalname);
+  }
+});
+const upload = multer({storage: fileStorage});
+
 app.use(express.static(publicPath));
 
 app.get("/", (req, res) => {
@@ -26,39 +33,10 @@ app.get('/upload', (req, res) => {
   res.sendFile('file_upload.html', { root: publicPath });
 });
 
-app.post("/upload", (req, res, next) => {
-  const form = new formidable.IncomingForm({
-    multiples: true
-  });
-  // Parse form data and upload file
-  form.parse(req, (err, fields, files) => {
-    if (err) {
-      console.log(err);
-      return;
-    }
-    if (!Array.isArray(files.filetoupload)){
-      var oldpath = files.filetoupload.path;
-      var newpath = './uploadedFiles/' + files.filetoupload.name;
-      fs.rename(oldpath, newpath, function (err) {
-        if (err) {
-          console.log(err);
-        };
-      });
-    } else {
-      files.filetoupload.forEach(file => {
-        var oldpath = file.path;
-        var newpath = './uploadedFiles/' + file.name;
-        fs.rename(oldpath, newpath, function (err) {
-          if (err) {
-            console.log(err);
-          };
-        });
-      });
-    };
-    res.write('<script>alert("File(s) have been uploaded.");</script>');
-    res.write('<script>window.close()</script>');
-    res.end();
-  });
+app.post("/upload", upload.array('filetoupload'), (req, res, next) => {
+  res.write('<script>alert("File(s) have been uploaded.");</script>');
+  res.write('<script>window.close()</script>');
+  res.end();
 });
 
 // Init socket connection
