@@ -316,11 +316,6 @@ li.message {
   font-weight: 600;
 }
 
-#fileToUpload
-{
-    display: none;
-}
-
 #paperclip-icon{
   margin-top: 10px;
   font-size: 25px;    

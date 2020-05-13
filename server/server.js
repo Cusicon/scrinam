@@ -1,4 +1,5 @@
 const http = require("http");
+const fs = require('fs');
 const express = require("express");
 const socketIO = require("socket.io");
 const path = require("path");
@@ -29,13 +30,18 @@ app.get("/", (req, res) => {
   res.sendFile("./index.html");
 });
 
-app.get('/upload', (req, res) => {
-  res.sendFile('file_upload.html', { root: publicPath });
+app.get('/download/:file', (req, res, next) => {
+  let file_name = req.params.file.slice(1);
+  const filePath = path.join(__dirname, '../uploadedFiles', file_name);
+  res.download(filePath);
 });
 
 app.post("/upload", upload.array('filetoupload'), (req, res, next) => {
-  res.write('<script>alert("File(s) have been uploaded.");</script>');
-  res.write('<script>window.close()</script>');
+  let filesToAppend = req.files;
+  filesToAppend.forEach(file => {
+    res.write(`<a style="float: left; font-size: 1rem; padding: 0px 15px;" 
+    target="_blank" href="/download/:${file.originalname}">${file.originalname}</a>`);
+  })
   res.end();
 });
 
@@ -113,6 +119,12 @@ io.on("connection", socket => {
       callback();
     }
   });
+
+  socket.on("addLinks", (file_link => {
+    users.users.forEach(user => {
+      io.to(user.id).emit("updateLinks", file_link);
+    });
+  }));
 
   // Disconnect socket
   socket.on("disconnect", () => {

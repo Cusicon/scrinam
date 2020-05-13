@@ -215,9 +215,38 @@ socket.on("connect", () => {
   });
 });
 
+let form_upload = document.getElementById('form_upload');
+form_upload.addEventListener('change', () => {
+  $('#submit_upload').trigger('click');
+})
+
+$("#form_upload").submit(function (e) {
+  e.preventDefault();
+  var formData = new FormData(this);
+  console.log(formData);
+  $.ajax({
+    type: "POST",
+    url: "/upload",
+    data: formData,
+    processData: false,
+    contentType: false,
+    success: function (file_link) {
+      socket.emit("addLinks", file_link);
+    },
+    error: function (e) {
+      console.log("some error", e);
+    }
+  });
+
+});
+
 socket.on("disconnect", () => {
   console.log("Disconnected from server");
 });
+
+socket.on("updateLinks", (file) => {
+  $('#files').append(file);
+})
 
 socket.on("updateUserList", (users) => {
   let ol = $("<ol></ol>");
