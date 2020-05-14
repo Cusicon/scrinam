@@ -231,7 +231,7 @@ $("#form_upload").submit(function (e) {
     processData: false,
     contentType: false,
     success: function (file_link) {
-      socket.emit("addLinks", file_link);
+      socket.emit("addLinks", file_link, params.room);
     },
     error: function (e) {
       console.log("some error", e);

@@ -8,6 +8,7 @@ const multer = require('multer');
 const { generateMessage, generateLocationMessage } = require("./utils/message");
 const { isRealString } = require("./utils/validation");
 const { Users } = require("./utils/users");
+const Cache = require("./utils/cache");
 
 const publicPath = path.join(__dirname, "../public");
 const port = process.env.PORT || 3030;
@@ -16,8 +17,15 @@ let server = http.createServer(app);
 let io = socketIO(server);
 let users = new Users();
 
+// let cache = new Cache();
+// cache.retrieveCache();
 const fileStorage = multer.diskStorage({
-  destination: 'uploadedFiles',
+  destination: (req, file, cb) => {
+    let room = req.params.room;
+    let dirPath = path.join(__dirname, '../db', `${room}`);
+    fs.mkdirSync(dirPath);
+    cb(null, dirPath);
+  },
   filename: (req, file, cb) => {
     cb(null, file.originalname);
   }
@@ -32,8 +40,20 @@ app.get("/", (req, res) => {
 
 app.get('/download/:file', (req, res, next) => {
   let file_name = req.params.file.slice(1);
-  const filePath = path.join(__dirname, '../uploadedFiles', file_name);
-  res.download(filePath);
+  const filePath = path.join(__dirname, '../db', file_name);
+  fs.exists(filePath, exists => {
+    if(exists){
+      res.download(filePath);
+    }
+    else {
+      res.write(`<script> (function(){
+      alert('File does not exist.');
+      window.close();
+    })();
+      </script>`);
+      res.end();
+    }
+  });
 });
 
 app.post("/upload", upload.array('filetoupload'), (req, res, next) => {
@@ -70,6 +90,11 @@ io.on("connection", socket => {
         moment().format("MMMM D")
       )
     );
+
+    let links = users.getRoomLinks(params.room);
+    if(links){
+      links.forEach(link => socket.emit("updateLinks", link.file_link));
+    }
 
     // Alert others of a new user joining.
     socket.broadcast
@@ -120,11 +145,12 @@ io.on("connection", socket => {
     }
   });
 
-  socket.on("addLinks", (file_link => {
+  socket.on("addLinks", (file_link, room) => {
+    users.addLink(file_link, room);
     users.users.forEach(user => {
       io.to(user.id).emit("updateLinks", file_link);
     });
-  }));
+  });
 
   // Disconnect socket
   socket.on("disconnect", () => {

@@ -1,6 +1,7 @@
 class Users {
   constructor() {
     this.users = [];
+    this.links = [];
   }
 
   addUser(id, name, room) {
@@ -16,16 +17,25 @@ class Users {
     }
     return user;
   }
-
+  
   getUser(id) {
     return this.users.filter(user => user.id === id)[0];
   }
-
+  
   getUserList(room) {
     let users = this.users.filter(user => user.room === room);
     return users;
     // let namesArr = users.map(user => user.name);
     // return namesArr;
+  }
+  
+  addLink(file_link, room) {
+    let link = {file_link, room};
+    this.links.push(link);
+  }
+
+  getRoomLinks(room) {
+    return this.links.filter(link => link.room.toLowerCase() === room);
   }
 }
 
