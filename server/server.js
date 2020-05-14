@@ -20,12 +20,7 @@ let users = new Users();
 // let cache = new Cache();
 // cache.retrieveCache();
 const fileStorage = multer.diskStorage({
-  destination: (req, file, cb) => {
-    let room = req.params.room;
-    let dirPath = path.join(__dirname, '../db', `${room}`);
-    fs.mkdirSync(dirPath);
-    cb(null, dirPath);
-  },
+  destination: 'db',
   filename: (req, file, cb) => {
     cb(null, file.originalname);
   }
