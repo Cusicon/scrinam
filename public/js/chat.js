@@ -204,6 +204,7 @@ let params = $.deparam(window.location.search);
 
 socket.on("connect", () => {
   console.log("Connected to server");
+  document.getElementById('room').value = params.room;
 
   socket.emit("join", params, (err) => {
     if (err) {
@@ -223,10 +224,9 @@ form_upload.addEventListener('change', () => {
 $("#form_upload").submit(function (e) {
   e.preventDefault();
   var formData = new FormData(this);
-  console.log(formData);
   $.ajax({
     type: "POST",
-    url: "/upload",
+    url: `/upload?room=${document.getElementById('room').value}`,
     data: formData,
     processData: false,
     contentType: false,

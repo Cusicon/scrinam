@@ -9,6 +9,7 @@ const { generateMessage, generateLocationMessage } = require("./utils/message");
 const { isRealString } = require("./utils/validation");
 const { Users } = require("./utils/users");
 const Cache = require("./utils/cache");
+const bodyParser = require('body-parser');
 
 const publicPath = path.join(__dirname, "../public");
 const port = process.env.PORT || 3030;
@@ -19,15 +20,30 @@ let users = new Users();
 
 // let cache = new Cache();
 // cache.retrieveCache();
+
+app.use(bodyParser.urlencoded({ extended: false }));
+app.use(express.static(publicPath));
 const fileStorage = multer.diskStorage({
-  destination: 'db',
+  destination: (req, file, cb) => {
+    let room = req.query.room;
+    let dirPath = path.join(__dirname, "../db", `${room}`);
+    fs.exists(dirPath, (exists) => {
+      if(exists){
+        return cb(null, dirPath);
+      }
+      fs.mkdir(dirPath, (err) => {
+        if(err){
+          console.log(err);
+        }
+        cb(null, dirPath)
+      });
+    })
+  },
   filename: (req, file, cb) => {
     cb(null, file.originalname);
   }
 });
 const upload = multer({storage: fileStorage});
-
-app.use(express.static(publicPath));
 
 app.get("/", (req, res) => {
   res.sendFile("./index.html");
@@ -35,7 +51,7 @@ app.get("/", (req, res) => {
 
 app.get('/download/:file', (req, res, next) => {
   let file_name = req.params.file.slice(1);
-  const filePath = path.join(__dirname, '../db', file_name);
+  const filePath = path.join(__dirname, '../db', req.query.room, file_name);
   fs.exists(filePath, exists => {
     if(exists){
       res.download(filePath);
@@ -53,9 +69,10 @@ app.get('/download/:file', (req, res, next) => {
 
 app.post("/upload", upload.array('filetoupload'), (req, res, next) => {
   let filesToAppend = req.files;
+  let room = req.query.room;
   filesToAppend.forEach(file => {
     res.write(`<a style="float: left; font-size: 1rem; padding: 0px 15px;" 
-    target="_blank" href="/download/:${file.originalname}">${file.originalname}</a>`);
+    target="_blank" href="/download/:${file.originalname}?room=${room}">${file.originalname}</a>`);
   })
   res.end();
 });
