@@ -8,9 +8,7 @@ const multer = require('multer');
 const { generateMessage, generateLocationMessage } = require("./utils/message");
 const { isRealString } = require("./utils/validation");
 const { Users } = require("./utils/users");
-const Cache = require("./utils/cache");
 const bodyParser = require('body-parser');
-
 const publicPath = path.join(__dirname, "../public");
 const port = process.env.PORT || 3030;
 let app = express();
@@ -23,10 +21,11 @@ let users = new Users();
 
 app.use(bodyParser.urlencoded({ extended: false }));
 app.use(express.static(publicPath));
+const downloadsDir = path.join(__dirname, '../db');
 const fileStorage = multer.diskStorage({
   destination: (req, file, cb) => {
     let room = req.query.room;
-    let dirPath = path.join(__dirname, "../db", `${room}`);
+    let dirPath = path.join(downloadsDir, `${room}`);
     fs.exists(dirPath, (exists) => {
       if(exists){
         return cb(null, dirPath);
@@ -41,7 +40,7 @@ const fileStorage = multer.diskStorage({
   },
   filename: (req, file, cb) => {
     cb(null, file.originalname);
-  }
+  }, 
 });
 const upload = multer({storage: fileStorage});
 
@@ -54,7 +53,22 @@ app.get('/download/:file', (req, res, next) => {
   const filePath = path.join(__dirname, '../db', req.query.room, file_name);
   fs.exists(filePath, exists => {
     if(exists){
-      res.download(filePath);
+      fs.open(filePath, 'r', (err, fd) => {
+        if (err) {
+          next(err);
+        }
+        fs.fstat(fd, (err, stats) => {
+          if (err) {
+            next(err);
+          }
+          if (stats.size > 1073741824) {
+            let fileDLStream = fs.createReadStream(filePath);
+            fileDLStream.pipe(res);
+          } else {
+            res.download(filePath);
+          }
+        })
+      })
     }
     else {
       res.write(`<script> (function(){
@@ -168,15 +182,24 @@ io.on("connection", socket => {
   socket.on("disconnect", () => {
     let user = users.removeUser(socket.id);
 
+    if (users.users.length === 0){
+      let roomDownloads = path.join(downloadsDir, user.room);
+      let files = fs.readdirSync(roomDownloads);
+      if(files) {
+        files.forEach(file => {
+          fs.unlinkSync(path.join(roomDownloads, file));
+        });
+      }
+      fs.rmdirSync(roomDownloads, {});
+    }
     if (user) {
       io.to(user.room).emit("updateUserList", users.getUserList(user.room));
       io.to(user.room).emit(
         "newMessage",
         generateMessage(`Admin :: ${user.name}`, `just left the room.`)
-      );
+        );
+      console.log("User was disconnected");
     }
-
-    console.log("User was disconnected");
   });
 });
 

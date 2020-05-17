@@ -223,7 +223,7 @@ form_upload.addEventListener('change', () => {
 
 $("#form_upload").submit(function (e) {
   e.preventDefault();
-  var formData = new FormData(this);
+  const formData = new FormData(this);
   $.ajax({
     type: "POST",
     url: `/upload?room=${document.getElementById('room').value}`,
