@@ -69,6 +69,9 @@ let hideUsersonMobile = () => {
 
 // NOTIFICATIONS
 
+// Request for Notification
+requestNotificationPermissions();
+
 /**
  * Set Default Socket For Show Notification
  * @param {type} data
@@ -102,9 +105,10 @@ function requestNotificationPermissions() {
   let Notification =
     window.Notification || window.mozNotification || window.webkitNotification;
 
-  if (Notification.permission !== "denied") {
-    Notification.requestPermission(function (permission) {});
-  }
+    Notification.requestPermission(function (permission) {console.log("Permission: ", permission)});
+      
+    // if (Notification.permission !== "denied") {
+    // }
 }
 
 /**
